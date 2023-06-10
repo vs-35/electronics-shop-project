@@ -88,6 +88,3 @@ class Item:
         number = float(str_num)
         result = int(number)
         return result
-
-item1 = Item("Смартфон", 10000, 20)
-print(item1.calculate_total_price())
