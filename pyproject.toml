@@ -5,7 +5,6 @@ description = ""
 authors = ["kirillskyeng <kirill.netreba@skyeng.ru>"]
 readme = "README.md"
 packages = [{include = "electronics_shop_project"}]
-
 [tool.poetry.dependencies]
 python = "^3.11"
 pytest = "^7.3.1"
