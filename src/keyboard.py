@@ -1,47 +1,49 @@
 from src.item import Item
-
-class Keyboard(Item, MixinLog):
-    """
-       Класс для представления нового товара в магазине.
-       """
-
-    def __init__(self, name: str, price: float, quantity: int, language: str):
-        """
-        Создание экземпляра дочернего класса phone.
-
-        :param name: Название товара.
-        :param price: Цена за единицу товара.
-        :param quantity: Количество товара в магазине.
-        :param language: Язык ввода (раскладки клавиатуры).
-        """
-        super().__init__(self, name, price, quantity)
-        self.language = language
-
 class MixinLog:
-    """Класс MixinLog для добавления в класс функционала по изменению языка (раскладки клавиатуры) без изменения его основной структуры"""
-    list_lang = ["EN", "RU"]
+    """Класс MixinLog для добавления в класс Keyboard
+       функционала по хранению и изменению языка
+       (раскладки клавиатуры) без изменения его основной структуры"""
 
-    def __init__(self):
-        self.language = self.list_lang[0]
+    LANG = "EN"
+
+    def init(self):
+        super().__init__()
+        self.__language = self.LANG
+
+
+    def __str__(self):
+        """Метод для отображения информации об объекте класса (о языке (раскладки клавиатуры) для пользователей"""
+        return self.__language
 
     def change_lang(self):
-        for language in list_lang:
-            if language in range [0]:
-                self.language = self.list_lang[0]
-            elif language in range [1]:
-                self.language = self.list_lang[1]
+        if self.__language == "EN":
+            return self.__language == "RU"
+        if self.__language == "RU":
+            return self.__language == "EN"
 
-
-    # Геттер для language
     @property
     def language(self):
-        """Возвращает информацию о языке ввода (раскладке клавиатуры). К атрибуту можно обращаться без вызова."""
-        return self.language
+        return self.LANG
 
-    # Cеттер для language
+
     @language.setter
-    def language(self, language):
-        """Сеттер проверяет, что что язык ввода (раскладка клавиатуры) соответствует заданным значениям "EN" или "RU"."""
-        if language not in list_lang:
-            raise AttributeError('property 'language' of 'Keyboard' object has no setter')
-        self.language = language
+    def language(self, lang):
+        if lang != "EN":
+            if lang != "RU":
+                print("AttributeError: property 'language' of 'KeyBoard' object has no setter")
+
+
+class Keyboard(Item, MixinLog):
+    """Класс для представления товара Keyboard в магазине."""
+    def __init__(self, name, price, quantity):
+        """
+        Создание экземпляра класса Keyboard в результате
+        множественного наследования классов Item и MixinLog.
+        """
+        super().__init__(name, price, quantity)
+        self.name = name
+
+
+    def __str__(self) -> str:
+        """Метод для отображения информации об объекте класса для пользователей"""
+        return self.name

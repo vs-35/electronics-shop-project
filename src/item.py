@@ -20,6 +20,7 @@ class Item:
         self.quantity = quantity
         self.pay_rate = Item.pay_rate
         self.all.append(self)
+        super().__init__()
 
     def __repr__(self) -> str:
         """Метод для отображения информации об объекте класса в режиме отладки (для разработчиков)"""
@@ -63,7 +64,7 @@ class Item:
     @name.setter
     def name(self, name):
         """Сеттер проверяет, что длина наименования товара не больше 10 символов."""
-        if len(name) <= 10:
+        if len(name) <= 20:
             self.__name = name
             print(name)
         else:
