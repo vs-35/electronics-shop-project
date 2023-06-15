@@ -21,13 +21,18 @@ def test_init():
     assert item1.quantity == 20
 
 
-def test_apply_discount():
+def test_apply_discount(item1):
     item1 = Item("Смартфон", 10000, 20)
-    pay_rate1 = 0.85
-    assert item1.apply_discount(pay_rate1) == 8500
-    item1 = Item("Смартфон", 10000, 20)
-    pay_rate2 = 0
-    assert item1.apply_discount(pay_rate2) == None
+    Item.pay_rate = 0.8
+    item1.apply_discount()
+    assert item1.price == 8000.0
+    Item.pay_rate = 0
+    item1.apply_discount()
+    assert item1.price == None
+
+
+def test_all():
+    assert Item.all != []
 
 
 def test_string_to_number():

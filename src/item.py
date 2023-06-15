@@ -20,7 +20,7 @@ class Item:
         self.quantity = quantity
         self.pay_rate = Item.pay_rate
         self.all.append(self)
-        super().__init__()
+
 
     def __repr__(self) -> str:
         """Метод для отображения информации об объекте класса в режиме отладки (для разработчиков)"""
