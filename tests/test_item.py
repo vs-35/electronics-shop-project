@@ -1,17 +1,23 @@
 """Здесь надо написать тесты с использованием pytest для модуля item."""
 import pytest
-from src.item import Item
+from src.item import Item, InstantiateCSVError
 from src.phone import Phone
 
-
+filename = '../src/items.csv'
 def test_calculate_total_price():
     item1 = Item("Смартфон", 10000, 20)
     assert item1.calculate_total_price() == 200000
 
 
 def test_instantiate_from_csv():
-    item1 = Item.all[0]
-    assert item1.name == 'Смартфон'
+    Item.instantiate_from_csv()
+    assert len(Item.all) == 10
+
+    with pytest.raises(FileNotFoundError):
+        Item.instantiate_from_csv(filename='Отсутствует файл item.csv')
+
+    with pytest.raises(InstantiateCSVError):
+        Item.instantiate_from_csv(filename='Файл item.csv поврежден')
 
 
 def test_init():
@@ -55,3 +61,8 @@ def test_add():
      item1 = Item("Смартфон", 10000, 20)
      phone1 = Phone("iPhone 14", 120_000, 5, 2)
      assert item1 + phone1 == 25
+
+     with pytest.raises(Exception):
+         assert item1 + 24
+     with pytest.raises(Exception):
+         assert item2 + 'str'
