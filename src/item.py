@@ -1,4 +1,11 @@
 import csv
+class InstantiateCSVError(Exception):
+    def __init__(self, message):
+        self.message = message
+
+    def __str__(self):
+        return self.message
+
 
 class Item:
     """
@@ -81,8 +88,13 @@ class Item:
                 reader = csv.DictReader(csvfile)
                 for row in reader:
                     cls(row["name"], row["price"], row["quantity"])
+
+                    if not Item:
+                        raise InstantiateCSVError('Файл item.csv поврежден')
+                    else:
+                        cls.all.append(Item)
         except FileNotFoundError:
-            print('Файл не найден')
+            print('Отсутствует файл item.csv')
 
     @staticmethod
     def string_to_number(str_num):
