@@ -87,10 +87,11 @@ class Item:
             with open(filename, 'r', encoding='cp1251', newline='') as csvfile:
                 reader = csv.DictReader(csvfile)
                 for row in reader:
-                    cls(row["name"], row["price"], row["quantity"])
-
-                    if not Item:
-                        raise InstantiateCSVError('Файл item.csv поврежден')
+                    try:
+                        cls(row["name"], row["price"], row["quantity"])
+                    except ValueError:
+                        print(f"Ошибка при чтении данных в строке {reader.line_num}: {row}")
+                        raise
                     else:
                         cls.all.append(Item)
         except FileNotFoundError:
