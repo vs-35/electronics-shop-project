@@ -1,5 +1,6 @@
 import csv
 class InstantiateCSVError(Exception):
+    """Класс - исключение, если item.csv поврежден (например, отсутствует одна из колонок данных)"""
     def __init__(self, message):
         self.message = message
 
@@ -87,15 +88,14 @@ class Item:
             with open(filename, 'r', encoding='cp1251', newline='') as csvfile:
                 reader = csv.DictReader(csvfile)
                 for row in reader:
-                    try:
-                        cls(row["name"], row["price"], row["quantity"])
-                    except ValueError:
-                        print(f"Ошибка при чтении данных в строке {reader.line_num}: {row}")
-                        raise
-                    else:
+                    if reader.fieldnames == ['name', 'price', 'quantity']:
                         cls.all.append(Item)
+
+                    else:
+                        raise InstantiateCSVError('Файл items.csv поврежден')
         except FileNotFoundError:
-            print('Отсутствует файл item.csv')
+            raise FileNotFoundError('Отсутствует файл item.csv')
+
 
     @staticmethod
     def string_to_number(str_num):
